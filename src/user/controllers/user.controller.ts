@@ -1,13 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import JwtAuthenticationGuard from 'src/auth/guards/jwt-authentication.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import RequestWithUser from 'src/auth/interfaces/request-with-user.interface';
+import { RoleType } from '../constants/role-type.constant';
 import { UserEntity } from '../entities/user.entity';
-import { UserService } from '../services/user.service';
 
 @Controller('Users')
 export class UserController {
-  constructor(private readonly _userService: UserService) {}
-
   @Get()
-  public async getUser(): Promise<UserEntity | undefined> {
-    return this._userService.getUser();
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthenticationGuard, RolesGuard)
+  public async getUser(@Req() request: RequestWithUser): Promise<UserEntity> {
+    return request.user;
   }
 }
