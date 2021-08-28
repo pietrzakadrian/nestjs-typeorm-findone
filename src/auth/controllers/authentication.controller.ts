@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { RegisterDto } from '../dtos/register.dto';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
-import RequestWithUser from '../interfaces/request-with-user.interface';
+import { RequestWithUser } from '../interfaces/request-with-user.interface';
 import { AuthService } from '../services/auth.service';
 
 @Controller('authentication')

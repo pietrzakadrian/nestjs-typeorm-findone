@@ -17,17 +17,9 @@ export class UserService {
   }
 
   public async getUserById(payload): Promise<UserEntity> {
-    console.log(payload);
-    console.log(payload.id);
+    console.log(payload.userId); // 2
+    console.log(payload.id); // undefined
 
     return this._userRepository.findOne(payload.id);
   }
-
-  // public async getUserById(id: number): Promise<UserEntity> {
-  //   const queryBuilder = this._userRepository.createQueryBuilder('user');
-
-  //   queryBuilder.where('user.id = :id', { id });
-
-  //   return queryBuilder.getOne();
-  // }
 }
